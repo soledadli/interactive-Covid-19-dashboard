@@ -1,2 +1,21 @@
-# interactive-Covid-19-dashboard
-An interactive Covid-19 dashboard that allows users to visualize the number of Covid-19 cases or deaths per country as a function of time.
+Table of Content
+================
+* [Interactive-Covid-19-Dashboard](#Interactive-Covid-19-Dashboard)
+  * [Description](#description)
+  * [Process](#process)
+  * [Results](#results)
+  * [Installation guide](#installation-guide)
+  * [Licensing](#licensing)
+
+# Interactive-Covid-19-Dashboard
+## Description
+
+## Process
+
+
+## Results
+
+
+## Installation guide
+
+## Licensing
