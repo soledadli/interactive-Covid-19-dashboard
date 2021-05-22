@@ -19,3 +19,6 @@ Table of Content
 ## Installation guide
 
 ## Licensing
+MIT License
+
+Copyright (c) 2021 Eliseo Baquero
