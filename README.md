@@ -17,6 +17,14 @@ A work team made up of three students from the CRI-Université de Paris, carry o
 
 
 ## Installation guide
+First, we suggest having Anaconda installed on your computer, if you don't have it installed please go to: https://www.anaconda.com/products/individual
+Second, follow the instructions according to the characteristics of your computer.
+Third, verify that you have access to the Jupiter notebook.
+Finally follow the following code and install the project dependencies.
+
+pip install pandas 
+pip install matplotlit
+pip install streamlit
 
 ## Licensing
 MIT License
