@@ -22,9 +22,9 @@ Second, follow the instructions according to the characteristics of your compute
 Third, verify that you have access to the Jupiter notebook.
 Finally follow the following code and install the project dependencies.
 
-pip install pandas 
-pip install matplotlit
-pip install streamlit
+ * pip install pandas 
+ * pip install matplotlit
+ * pip install streamlit
 
 ## Licensing
 MIT License
