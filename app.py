@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 
 # Setting Dashboard Interface
+
+
 st.title('COVID-19 Dashboard')
 st.markdown(
 '''A collaborative work of creating an interactive Covid-19 dashboard by Digital Science M1 students from
@@ -9,29 +11,34 @@ for Research and Interdisciplinarity.
 [GitHub Project](https://github.com/soledadli/interactive-Covid-19-dashboard)
 ''')
 # Multiselect bar for countries
-countries = st.multiselect("Choose countries", ['France','US','India', 'Brazil', 'South Africa'])
-#  A sidebar Time slider for changing different dates
-date = st.sidebar.slider('Date',1,31,15)
-if not countries:
+country_choice = st.multiselect("Choose countries", ['France','US','India', 'Brazil', 'South Africa'])
+if not country_choice:
     st.error("Please select at least one country.")
+
+
 
 # Experimenting with Data
 @st.cache
-def test_data(filename):
-    df = pd.read_csv('time_series_covid19_'+ filename + '.csv')
-    countries = ['France', 'US', 'India', 'Brazil', 'South Africa']
-    df = df[df["Country/Region"].isin(countries)].groupby('Country/Region').sum()
-    df.rename(columns = {'Lat':'lat','Long':'lon'}, inplace = True)
+def load_data( ):
+    df = pd.read_csv('Dataset_COVID_complete.csv', index_col = [0])
     return df
 
-'## Recovered_Global Dataframe with selected countries'
-recovered = test_data('recovered_global')
-recovered
-if st.checkbox('Show Deaths Global Data'):
-    '### Geo Recovered Data with selected countries'
-    st.map(recovered)
+'##  Global COVID Cases (Confirmed, Recovered and Deaths)'
+df = load_data()
 
-'## Deaths_Global Dataframe with selected countries'
-death = test_data('deaths_global')
-death
+#  A sidebar Time slider for changing different dates
+st.sidebar.subheader("Choices of the Dates")
+year_2020 = st.sidebar.checkbox('2020')
+year_2021 = st.sidebar.checkbox('2021')
+month = st.sidebar.slider('Month',1,12,6)
+if year_2020:
+    df[(df['year'] == 2020 ) & (df['month'] == month)]
+if year_2021:
+    if month > 5:
+        st.write("Future Dates")
+    else:
+        df[(df['year'] == 2021) & (df['month'] == month)]
+
+
+
 
