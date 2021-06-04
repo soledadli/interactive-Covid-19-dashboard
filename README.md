@@ -29,9 +29,9 @@ This is the file resulting from the merger of the three files described above.
 
 
 ## Installation guide
-First, we suggest having Anaconda installed on your computer, if you don't have it installed please go to: https://www.anaconda.com/products/individual
-Second, follow the instructions according to the characteristics of your computer.
-Third, verify that you have access to the Jupiter notebook.
+- First, we suggest having Anaconda installed on your computer, if you don't have it installed please go to: https://www.anaconda.com/products/individual
+- Second, follow the instructions according to the characteristics of your computer.
+- Third, verify that you have access to the Jupiter notebook.
 To install the project dependencies run pip install -r requirements.txt
 
 ## Licensing
