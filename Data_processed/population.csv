@@ -53,7 +53,7 @@ Croatia,4100719
 Cuba,11325391
 Curaçao,164211
 Cyprus,1208886
-Czech Republic (Czechia),10712481
+Czechia,10712481
 Denmark,5795780
 Djibouti,990447
 Dominica,72017
@@ -141,7 +141,7 @@ Montenegro,628080
 Montserrat,4993
 Morocco,36985624
 Mozambique,31398811
-Myanmar,54473253
+Burma,54473253
 Namibia,2548663
 Nauru,10836
 Nepal,29225196
@@ -193,7 +193,7 @@ Slovenia,2078989
 Solomon Islands,689671
 Somalia,15965848
 South Africa,59436725
-South Korea,51276977
+"Korea, South",51276977
 South Sudan,11216250
 Spain,46757980
 Sri Lanka,21428970
@@ -204,7 +204,7 @@ Suriname,587541
 Sweden,10110233
 Switzerland,8665615
 Syria,17571053
-Taiwan,23824369
+Taiwan*,23824369
 Tajikistan,9573310
 Tanzania,60012400
 Thailand,69830779
@@ -223,7 +223,7 @@ Uganda,45974931
 Ukraine,43686577
 United Arab Emirates,9910892
 United Kingdom,67948282
-United States,331341050
+US,331341050
 Uruguay,3475842
 Uzbekistan,33551824
 Vanuatu,308337
@@ -234,3 +234,13 @@ Western Sahara,599769
 Yemen,29935468
 Zambia,18468257
 Zimbabwe,14899771
+West Bank and Gaza,5790000
+Congo (Brazzaville),5381000
+Congo (Kinshasa),86790000
+Cote d'Ivoire,25720000
+Diamond Princess,2674
+Kosovo,1873000
+MS Zaandam,1837
+Saint Kitts and Nevis,52834
+Saint Vincent and the Grenadines,110589
+Sao Tome and Principe,215056
