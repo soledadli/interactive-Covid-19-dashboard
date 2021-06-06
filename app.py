@@ -39,23 +39,27 @@ def df_selection(list_countries_temp, type,df_cases,df_death,df_recovered):
 def vis(filter_data,list_countries,dt_choice_normal, start_date, end_date,df_pop):
     filter_data['Date'] = pd.to_datetime(filter_data['Date'], format='%m/%d/%y')
     filter_data = filter_data.loc[(filter_data['Date'] >= start_date) & (filter_data['Date'] <= end_date),:]
-    print(filter_data.head())
-    if (dt_choice_normal =='Non-normalized data'):
-        if (len(list_countries[0])<3):
-            fig = px.line(filter_data, x='Date', y=list_countries[0][0] ,width=950, height=550)  # 'Daily_France_death')
-
+    if (dt_choice_normal == 'Non-normalized data'):
+        filter_data['Average'] = filter_data.iloc[:, 0].rolling(7).mean()
+        if (len(list_countries[0]) < 3):
+            fig = px.line(filter_data, x='Date', y=list_countries[0][0], width=950,
+                          height=550)  # 'Daily_France_death')
+            fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7_day_Average')
             return fig
-        elif (len(list_countries[0])>2):
-            fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1],width=950, height=550)
+
+        elif (len(list_countries[0]) > 2):
+            fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
+            #fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7_day_Average')
             return fig
     elif(dt_choice_normal=='Normalized over 100k'):
-
         if (len(list_countries[0]) < 3):
             df_pop= df_pop.reset_index()
             population = df_pop[df_pop['Country (or dependency)']==list_countries[0][0]]['Population (2020)']
             count_1000 = int(population)/100000
             filter_data[list_countries[0][0]] = filter_data[list_countries[0][0]]/count_1000
+            filter_data['Average'] = filter_data.iloc[:, 0].rolling(7).mean()
             fig = px.line(filter_data, x='Date', y=list_countries[0][0],width=950, height=550)  # 'Daily_France_death')
+            fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7_day_Average') # 7_day_average
 
             return fig
         elif (len(list_countries[0]) > 2):
@@ -65,6 +69,7 @@ def vis(filter_data,list_countries,dt_choice_normal, start_date, end_date,df_pop
                 count_1000 = int(population) / 100000
                 filter_data[list_countries[0][i]] = filter_data[list_countries[0][i]]/count_1000
             fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1],width=950, height=550)
+            #fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7_day_Average')
             return fig
 
 
@@ -99,5 +104,7 @@ if not dt_choice_normal:
 # Data Viz
 
 data_to_plot = df_selection(country_choice, dt_choice,df_cases,df_death,df_recovered)
+#print(data_to_plot.head())
+
 fig = vis(data_to_plot,country_choice,dt_choice_normal,start_date, end_date, df_population)
 st.plotly_chart(fig)
