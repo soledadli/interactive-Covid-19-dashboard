@@ -75,18 +75,11 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                               height=550)  # Cumulative Cases Plot
                 return fig
 
-            # Without Cumulative Cases
             elif (len(list_countries[0]) > 2):
-                print(filter_data.columns[0:-2])
                 for i in filter_data.columns[0:-2]:
                     new_col = 'Cumulative' + i
                     filter_data[new_col] = filter_data.loc[:, i].cumsum()
-                print(filter_data.columns[len(list_countries[0]):])
-               # fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
-                fig = px.line(filter_data, x='Date', y=filter_data.columns[len(list_countries[0]):], width=950, height=550)
-
-              #  for i in filter_data.columns[len(list_countries[0]):]:
-              #      fig.add_line(x=filter_data['Date'], y=filter_data[i] , name = i)
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[(len(list_countries[0])+1):], width=950, height=550)
                 return fig
 
 
@@ -137,7 +130,12 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                     population = df_pop[df_pop['Country (or dependency)'] == list_countries[0][i]]['Population (2020)']
                     count_1000 = int(population) / 100000
                     filter_data[list_countries[0][i]] = filter_data[list_countries[0][i]] / count_1000
-                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
+                print(filter_data.head())
+                for i in filter_data.columns[0:-1]:
+                    new_col = 'Cumulative' + i
+                    filter_data[new_col] = filter_data.loc[:, i].cumsum()
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[len(list_countries[0]) :], width=950,
+                              height=550)
                 return fig
 
 
@@ -151,15 +149,17 @@ st.sidebar.subheader("Choosing Dates")
 #month = st.sidebar.slider('Month',1,12,6)
 start_date = pd.Timestamp(st.sidebar.date_input('Start date', datetime.date(2020,1,22), min_value=datetime.date(2020,1,22), max_value=datetime.date(2021,5,19)))
 end_date = pd.Timestamp(st.sidebar.date_input('End date', datetime.date(2021,5,20), min_value=datetime.date(2020,1,23), max_value=datetime.date(2021,5,20)))
-country_choice.append(st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default='US'))
+dt_country = st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default='US')
+country_choice.append(dt_country)
+#country_choice.append(st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default='US'))
+if not dt_country:
+    st.error("Please select at least one country.")
 dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
 dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['Daily Cases','Cumulative Cases'])
 dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
 
 
-if not country_choice:
-    st.sidebar.error("Please select at least one country.")
-    #country_choice.append('US')
+
 if not dt_choice:
     st.sidebar.error("Please select at least one category.")
     #dt_choice = 'confirmed'
