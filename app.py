@@ -153,6 +153,7 @@ country_choice.append(dt_country)
 #country_choice.append(st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default='US'))
 if not dt_country:
     st.error("Please select at least one country.")
+    st.stop()
 dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
 dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['Daily Cases','Cumulative Cases'])
 dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
