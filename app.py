@@ -7,23 +7,24 @@ import datetime
 
 
 st.title('COVID-19 Dashboard')
-st.markdown(
+with st.beta_expander("Info"):
+     st.write(
 '''A collaborative work of creating an interactive Covid-19 dashboard by [Digital Science] (https://master.cri-paris.org/en/digital) M1 students from
 for Research and Interdisciplinarity. 
 [GitHub Project](https://github.com/soledadli/interactive-Covid-19-dashboard)
 
 Data source: [COVID-19 Data Repository](https://github.com/CSSEGISandData/COVID-19) by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University
-
-## How to use this dashboard?
-
-First, choose the period to analyze between two dates to select from a calendar.
-Second, the user can choose to view a single country or compare two or more countries between countries.
-Third, select the template type on the chart.
-Fourth, choose from three types of statistics, confirmed deaths, confirmed cases, and recovered people.
-Finally, to compare two or more countries in absolute numbers, it is better to use the option "Non-normalized data",
-but to compare two or more countries with significant differences in population, the best option is "Normalized over 100k".
 ''')
 
+st.subheader("How to use this dashboard?")
+
+with st.beta_expander("Explanation"):
+     st.write("""First, choose the period to analyze between two dates to select from a calendar.         
+        Second, the user can choose to view a single country or compare two or more countries between countries.
+        Third, select the template type on the chart.
+        Fourth, choose from three types of statistics, confirmed deaths, confirmed cases, and recovered people.
+        Finally, to compare two or more countries in absolute numbers, it is better to use the option 'Non-normalized data', 
+        but to compare two or more countries with significant differences in population, the best option is 'Normalized over 100k'.""")
 
 # Experimenting with Data
 @st.cache
@@ -95,7 +96,7 @@ else:
 dt_choice_template =st.sidebar.selectbox("Choose Template", ['plotly','ggplot2', 'seaborn', 'simple_white',
          'plotly_white', 'plotly_dark', 'presentation', 'xgridoff',
          'ygridoff', 'gridon', 'none'])
-country_choice.append(st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default='US'))
+country_choice.append(st.sidebar.multiselect("Choose Countries", list(df_cases.columns[0:-3]), default='US'))
 dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
 dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
 
