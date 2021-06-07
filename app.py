@@ -123,7 +123,6 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                               height=550)  # Cumulative Cases Plot
                 return fig
 
-            # Without Cumulative Cases
             elif (len(list_countries[0]) > 2):
                 df_pop = df_pop.reset_index()
                 for i in range(0, len(list_countries[0]) - 1):
