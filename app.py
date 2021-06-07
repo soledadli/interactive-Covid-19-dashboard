@@ -5,11 +5,10 @@ import datetime
 
 # Setting Dashboard Interface
 
-st.title('COVID-19 Dashboard')
+st.title('🦠COVID-19 Dashboard')
 st.markdown(
-'''A collaborative work of building an interactive Covid-19 dashboard. [GitHub Project](https://github.com/soledadli/interactive-Covid-19-dashboard)\n
-Data source: [COVID-19 Data Repository](https://github.com/CSSEGISandData/COVID-19) by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University
-''')
+'''A collaborative work of building an interactive Covid-19 dashboard to provide insights about COVID globally. [GitHub Project](https://github.com/soledadli/interactive-Covid-19-dashboard)\n
+The data is from 01.22.2020 to 05.20.2021 and is collected from the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University. Data source: [COVID-19 Data Repository](https://github.com/CSSEGISandData/COVID-19) ''')
 
 st.subheader("Information about the features.")
 
@@ -59,9 +58,14 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                 fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7 Day Rolling') # 7 day average plot
                 return fig
 
-            # Without 7 day rolling applied
             elif (len(list_countries[0]) > 2):
-                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
+                for i in filter_data.columns[0:-1]:
+                    new_col = '7-day-rolling-' + i
+                    filter_data[new_col] = filter_data.loc[:, i].rolling(7).mean() # 7 day average calculation
+               # print(filter_data.columns[len(list_countries[0]):])
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:len(list_countries[0])], width=950, height=550)
+                for i in filter_data.columns[len(list_countries[0]):]:
+                    fig.add_bar(x=filter_data['Date'], y=filter_data[i] , name = i)
                 return fig
 
         if (dt_choice_cases == "Cumulative Cases"):
@@ -71,9 +75,18 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                               height=550)  # Cumulative Cases Plot
                 return fig
 
-            # Without Cumulative Cases & 7 day rolling applied
+            # Without Cumulative Cases
             elif (len(list_countries[0]) > 2):
-                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
+                print(filter_data.columns[0:-2])
+                for i in filter_data.columns[0:-2]:
+                    new_col = 'Cumulative' + i
+                    filter_data[new_col] = filter_data.loc[:, i].cumsum()
+                print(filter_data.columns[len(list_countries[0]):])
+               # fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[len(list_countries[0]):], width=950, height=550)
+
+              #  for i in filter_data.columns[len(list_countries[0]):]:
+              #      fig.add_line(x=filter_data['Date'], y=filter_data[i] , name = i)
                 return fig
 
 
@@ -90,15 +103,20 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
 
                 return fig
 
-            # Without 7 day rolling applied
             elif (len(list_countries[0]) > 2):
                 df_pop = df_pop.reset_index()
                 for i in range(0,len(list_countries[0])-1):
                     population = df_pop[df_pop['Country (or dependency)'] == list_countries[0][i]]['Population (2020)']
                     count_1000 = int(population) / 100000
                     filter_data[list_countries[0][i]] = filter_data[list_countries[0][i]]/count_1000
-                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1],width=950, height=550)
-                #fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7_day_Average')
+                for i in filter_data.columns[0:-1]:
+                    new_col = '7-day-rolling-' + i
+                    filter_data[new_col] = filter_data.loc[:, i].rolling(7).mean()  # 7 day average calculation
+                    # print(filter_data.columns[len(list_countries[0]):])
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:len(list_countries[0])], width=950,
+                              height=550)
+                for i in filter_data.columns[len(list_countries[0]):]:
+                    fig.add_bar(x=filter_data['Date'], y=filter_data[i], name=i)
                 return fig
 
         if (dt_choice_cases == "Cumulative Cases"):
@@ -112,7 +130,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                               height=550)  # Cumulative Cases Plot
                 return fig
 
-            # Without Cumulative Cases & 7 day rolling applied
+            # Without Cumulative Cases
             elif (len(list_countries[0]) > 2):
                 df_pop = df_pop.reset_index()
                 for i in range(0, len(list_countries[0]) - 1):
