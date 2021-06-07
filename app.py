@@ -7,21 +7,21 @@ import datetime
 
 st.title('COVID-19 Dashboard')
 st.markdown(
-'''A collaborative work of creating an interactive Covid-19 dashboard by Digital Science M1 students from
-for Research and Interdisciplinarity. 
-[GitHub Project](https://github.com/soledadli/interactive-Covid-19-dashboard)
+'''A collaborative work of building an interactive Covid-19 dashboard. [GitHub Project](https://github.com/soledadli/interactive-Covid-19-dashboard)\n
 Data source: [COVID-19 Data Repository](https://github.com/CSSEGISandData/COVID-19) by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University
 ''')
 
-st.subheader("How to use this dashboard?")
+st.subheader("Information about the features.")
 
 with st.beta_expander("Explanation"):
-     st.write("""First, choose the period to analyze between two dates to select from a calendar.         
-        Second, the user can choose to view a single country or compare two or more countries between countries.
-        Third, select the template type on the chart.
-        Fourth, choose from three types of statistics, confirmed deaths, confirmed cases, and recovered people.
-        Finally, to compare two or more countries in absolute numbers, it is better to use the option 'Non-normalized data', 
-        but to compare two or more countries with significant differences in population, the best option is 'Normalized over 100k'.""")
+     st.markdown(""" The COVID-19 Dashboard includes the following 6 features for data visualization. \n
+     1. Choose Template of the plots.
+     2. Choose a time frame.
+     3. Choose countries
+     4. Choose categories from three types of cases: confirmed deaths, confirmed, and recovered.
+     5. Choose case view: daily cases or cumulative cases.
+     6. Choose view between normalized over 100k and non-normalized data. (Tip: To compare two or more countries in absolute numbers, it is better to use the option 'Non-normalized data.'
+        To compare two or more countries with significant differences in population, the best option is 'Normalized over 100k'.""")
 
     
 # Experimenting with Data
