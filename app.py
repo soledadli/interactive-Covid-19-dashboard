@@ -5,14 +5,11 @@ import datetime
 
 # Setting Dashboard Interface
 
-
 st.title('COVID-19 Dashboard')
-with st.beta_expander("Info"):
-     st.write(
-'''A collaborative work of creating an interactive Covid-19 dashboard by [Digital Science] (https://master.cri-paris.org/en/digital) M1 students from
+st.markdown(
+'''A collaborative work of creating an interactive Covid-19 dashboard by Digital Science M1 students from
 for Research and Interdisciplinarity. 
 [GitHub Project](https://github.com/soledadli/interactive-Covid-19-dashboard)
-
 Data source: [COVID-19 Data Repository](https://github.com/CSSEGISandData/COVID-19) by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University
 ''')
 
@@ -26,6 +23,7 @@ with st.beta_expander("Explanation"):
         Finally, to compare two or more countries in absolute numbers, it is better to use the option 'Non-normalized data', 
         but to compare two or more countries with significant differences in population, the best option is 'Normalized over 100k'.""")
 
+    
 # Experimenting with Data
 @st.cache
 def load_data( ):
@@ -48,38 +46,86 @@ def df_selection(list_countries_temp, type,df_cases,df_death,df_recovered):
     elif (type == 'Confirmed'):
         return df_cases[columns_to_filter]
 
-def vis(filter_data,list_countries,dt_choice_normal, start_date, end_date,df_pop):
+def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date, end_date,df_pop):
     filter_data['Date'] = pd.to_datetime(filter_data['Date'], format='%m/%d/%y')
     filter_data = filter_data.loc[(filter_data['Date'] >= start_date) & (filter_data['Date'] <= end_date),:]
-    print(filter_data.head())
-    if (dt_choice_normal =='Non-normalized data'):
-        if (len(list_countries[0])<3):
-            fig = px.line(filter_data, x='Date', y=list_countries[0][0] ,width=750, height=550, template= '%s' %(dt_choice_template))  # 'Daily_France_death')
 
-            return fig
-        elif (len(list_countries[0])>2):
-            fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1],width=750, height=550, template= '%s' %(dt_choice_template))
-            return fig
+    if (dt_choice_normal == 'Non-normalized data'):
+        if (dt_choice_cases == "Daily Cases"): # view choices
+            if (len(list_countries[0]) < 3):
+                filter_data['Average'] = filter_data.iloc[:, 0].rolling(7).mean() # 7 day average calculation
+                fig = px.line(filter_data, x='Date', y=list_countries[0][0], width=950,
+                              height=550)  # 'Daily_France_death')
+                fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7 Day Rolling') # 7 day average plot
+                return fig
+
+            # Without 7 day rolling applied
+            elif (len(list_countries[0]) > 2):
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
+                return fig
+
+        if (dt_choice_cases == "Cumulative Cases"):
+            filter_data['Cumulative'] = filter_data.iloc[:, 0].cumsum()  # Cumulative Cases Calculation
+            if (len(list_countries[0]) < 3):
+                fig = px.line(filter_data, x='Date', y='Cumulative', width=950,
+                              height=550)  # Cumulative Cases Plot
+                return fig
+
+            # Without Cumulative Cases & 7 day rolling applied
+            elif (len(list_countries[0]) > 2):
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
+                return fig
+
+
     elif(dt_choice_normal=='Normalized over 100k'):
+        if (dt_choice_cases == "Daily Cases"):
+            if (len(list_countries[0]) < 3):
+                df_pop= df_pop.reset_index()
+                population = df_pop[df_pop['Country (or dependency)']==list_countries[0][0]]['Population (2020)']
+                count_1000 = int(population)/100000
+                filter_data[list_countries[0][0]] = filter_data[list_countries[0][0]]/count_1000
+                filter_data['Average'] = filter_data.iloc[:, 0].rolling(7).mean() # 7_day_average Calculation
+                fig = px.line(filter_data, x='Date', y=list_countries[0][0],width=950, height=550)
+                fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7_day_Average') # 7_day_average plot
 
-        if (len(list_countries[0]) < 3):
-            df_pop= df_pop.reset_index()
-            population = df_pop[df_pop['Country (or dependency)']==list_countries[0][0]]['Population (2020)']
-            count_1000 = int(population)/100000
-            filter_data[list_countries[0][0]] = filter_data[list_countries[0][0]]/count_1000
-            fig = px.line(filter_data, x='Date', y=list_countries[0][0],width=750, height=550, template= '%s' %(dt_choice_template))  # 'Daily_France_death')
+                return fig
 
-            return fig
-        elif (len(list_countries[0]) > 2):
-            df_pop = df_pop.reset_index()
-            for i in range(0,len(list_countries[0])-1):
-                population = df_pop[df_pop['Country (or dependency)'] == list_countries[0][i]]['Population (2020)']
+            # Without 7 day rolling applied
+            elif (len(list_countries[0]) > 2):
+                df_pop = df_pop.reset_index()
+                for i in range(0,len(list_countries[0])-1):
+                    population = df_pop[df_pop['Country (or dependency)'] == list_countries[0][i]]['Population (2020)']
+                    count_1000 = int(population) / 100000
+                    filter_data[list_countries[0][i]] = filter_data[list_countries[0][i]]/count_1000
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1],width=950, height=550)
+                #fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7_day_Average')
+                return fig
+
+        if (dt_choice_cases == "Cumulative Cases"):
+            if (len(list_countries[0]) < 3):
+                df_pop = df_pop.reset_index()
+                population = df_pop[df_pop['Country (or dependency)'] == list_countries[0][0]]['Population (2020)']
                 count_1000 = int(population) / 100000
-                filter_data[list_countries[0][i]] = filter_data[list_countries[0][i]]/count_1000
-            fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1],width=750, height=550, template= '%s' %(dt_choice_template))
-            return fig
+                filter_data[list_countries[0][0]] = filter_data[list_countries[0][0]] / count_1000
+                filter_data['Cumulative'] = filter_data.iloc[:, 0].cumsum()  # Cumulative Cases Calculation
+                fig = px.line(filter_data, x='Date', y='Cumulative',width=950,
+                              height=550)  # Cumulative Cases Plot
+                return fig
+
+            # Without Cumulative Cases & 7 day rolling applied
+            elif (len(list_countries[0]) > 2):
+                df_pop = df_pop.reset_index()
+                for i in range(0, len(list_countries[0]) - 1):
+                    population = df_pop[df_pop['Country (or dependency)'] == list_countries[0][i]]['Population (2020)']
+                    count_1000 = int(population) / 100000
+                    filter_data[list_countries[0][i]] = filter_data[list_countries[0][i]] / count_1000
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:-1], width=950, height=550)
+                return fig
 
 
+dt_choice_template =st.sidebar.selectbox("Choose Template", ['plotly','ggplot2', 'seaborn', 'simple_white',
+         'plotly_white', 'plotly_dark', 'presentation', 'xgridoff',
+         'ygridoff', 'gridon', 'none'])
 # A Sidebar for choosing different functions
 st.sidebar.subheader("Choosing Dates")
 #year_2020 = st.sidebar.checkbox('2020')
@@ -87,18 +133,11 @@ st.sidebar.subheader("Choosing Dates")
 #month = st.sidebar.slider('Month',1,12,6)
 start_date = pd.Timestamp(st.sidebar.date_input('Start date', datetime.date(2020,1,22), min_value=datetime.date(2020,1,22), max_value=datetime.date(2021,5,19)))
 end_date = pd.Timestamp(st.sidebar.date_input('End date', datetime.date(2021,5,20), min_value=datetime.date(2020,1,23), max_value=datetime.date(2021,5,20)))
-
-if start_date < end_date:
-    st.sidebar.success('Start date: `%s`\n\nEnd date: `%s`' % (start_date, end_date))
-else:
-    st.sidebar.error('Error: End date must fall after start dat‚e.')
-
-dt_choice_template =st.sidebar.selectbox("Choose Template", ['plotly','ggplot2', 'seaborn', 'simple_white',
-         'plotly_white', 'plotly_dark', 'presentation', 'xgridoff',
-         'ygridoff', 'gridon', 'none'])
-country_choice.append(st.sidebar.multiselect("Choose Countries", list(df_cases.columns[0:-3]), default='US'))
+country_choice.append(st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default='US'))
 dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
+dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['Daily Cases','Cumulative Cases'])
 dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
+
 
 if not country_choice:
     st.sidebar.error("Please select at least one country.")
@@ -109,10 +148,12 @@ if not dt_choice:
 if not dt_choice_normal:
     st.sidebar.error("Please select number view.")
 
-'##   Daily Cases for %s' %(dt_choice)
+'## %s for  %s' %(dt_choice_cases, dt_choice)
 
 # Data Viz
 
 data_to_plot = df_selection(country_choice, dt_choice,df_cases,df_death,df_recovered)
-fig = vis(data_to_plot,country_choice,dt_choice_normal,start_date, end_date, df_population)
+#print(data_to_plot.head())
+
+fig = vis(data_to_plot,country_choice,dt_choice_normal,dt_choice_cases, start_date, end_date, df_population)
 st.plotly_chart(fig)
