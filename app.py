@@ -60,7 +60,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                 filter_data['Average'] = filter_data.iloc[:, 0].rolling(7).mean() # 7 day average calculation
 
                 fig = px.line(filter_data, x='Date', y=list_countries[0][0], 
-                              width=750, height=450, template= '%s' %(dt_choice_template))  # 'Daily_France_death')
+                              width=1000, height=500, template= '%s' %(dt_choice_template))  # 'Daily_France_death')
                 fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7 Days Rolling') # 7 day average plot
 
                 return fig
@@ -72,7 +72,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                # print(filter_data.columns[len(list_countries[0]):])
 
                 fig = px.line(filter_data, x='Date', y=filter_data.columns[0:len(list_countries[0])], 
-                              width=750, height=450, template= '%s' %(dt_choice_template))
+                              width=1000, height=500, template= '%s' %(dt_choice_template))
 
                 for i in filter_data.columns[len(list_countries[0]):]:
                     fig.add_bar(x=filter_data['Date'], y=filter_data[i] , name = i)
@@ -81,8 +81,8 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
         if (dt_choice_cases == "Cumulative Cases"):
             filter_data['Cumulative'] = filter_data.iloc[:, 0].cumsum()  # Cumulative Cases Calculation
             if (len(list_countries[0]) < 3):
-                fig = px.line(filter_data, x='Date', y='Cumulative', width=950,
-                              height=550)  # Cumulative Cases Plot
+                fig = px.line(filter_data, x='Date', y='Cumulative', width=1000,
+                              height=500)  # Cumulative Cases Plot
                 return fig
 
             elif (len(list_countries[0]) > 2):
@@ -91,7 +91,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                     filter_data[new_col] = filter_data.loc[:, i].cumsum()
 
                 fig = px.line(filter_data, x='Date', y=filter_data.columns[(len(list_countries[0])+1):], 
-                              width=750, height=450, template= '%s' %(dt_choice_template))
+                              width=1000, height=500, template= '%s' %(dt_choice_template))
                 return fig
 
 
@@ -105,7 +105,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                 filter_data['Average'] = filter_data.iloc[:, 0].rolling(7).mean() # 7_day_average Calculation
 
                 fig = px.line(filter_data, x='Date', y=list_countries[0][0],
-                              width=750, height=450, template= '%s' %(dt_choice_template))
+                              width=1000, height=500, template= '%s' %(dt_choice_template))
                 fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7 days Average') # 7_day_average plot
 
                 return fig
@@ -122,7 +122,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                     # print(filter_data.columns[len(list_countries[0]):])
 
                 fig = px.line(filter_data, x='Date', y=filter_data.columns[0:len(list_countries[0])], 
-                              width=750, height=450, template= '%s' %(dt_choice_template))
+                              width=1000, height=500, template= '%s' %(dt_choice_template))
 
                 for i in filter_data.columns[len(list_countries[0]):]:
                     fig.add_bar(x=filter_data['Date'], y=filter_data[i], name=i)
@@ -136,7 +136,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                 filter_data[list_countries[0][0]] = filter_data[list_countries[0][0]] / count_1000
                 filter_data['Cumulative'] = filter_data.iloc[:, 0].cumsum()  # Cumulative Cases Calculation
 
-                fig = px.line(filter_data, x='Date', y='Cumulative',width=750, height=450, template= '%s' %(dt_choice_template))  # Cumulative Cases Plot
+                fig = px.line(filter_data, x='Date', y='Cumulative',width=1000, height=500, template= '%s' %(dt_choice_template))  # Cumulative Cases Plot
 
                 return fig
 
@@ -152,7 +152,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                     filter_data[new_col] = filter_data.loc[:, i].cumsum()
 
                 fig = px.line(filter_data, x='Date', y=filter_data.columns[len(list_countries[0]) :], 
-                              width=750, height=450, template= '%s' %(dt_choice_template))
+                              width=1000, height=500, template= '%s' %(dt_choice_template))
 
                 return fig
 
