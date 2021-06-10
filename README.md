@@ -2,15 +2,16 @@ Table of Content
 ================
 * [Interactive-Covid-19-Dashboard](#Interactive-Covid-19-Dashboard)
   * [Description](#description)
-  * [Process](#process)
-  * [Results](#results)
+  * [Datasets](#Datasets)
   * [Installation guide](#installation-guide)
   * [Licensing](#licensing)
 
 # Interactive-Covid-19-Dashboard
 ## Description
-A work team made up of three students from the CRI-Université de Paris, carry out an analysis and visualization of the Covid-19, this is carried out in a collaborative way which develops an interactive panel so that those interested can see and understand the dimensions of the pandemic.
-## Process
+A collaborative work of building an interactive Covid-19 dashboard to provide insights about COVID globally by students from the Digital Sciences Track of Center for Research and Interdiscplinarity. 
+
+## Datasets
+The data sets are from the open data of [Jonhs Hopkins University](https://github.com/CSSEGISandData/COVID-19)
 * Dataset_COVID_Death_complete.csv
 * Dataset_COVID_confiremed_complete.csv
 * Dataset_COVID_recovered_complete.csv
@@ -22,19 +23,21 @@ latitude: is one of the geographic coordinates that specifies the north – sout
 Longitude: it is one of the geographic coordinates that specifies the east – west position of a point on the Earth's surface.
 Date: identifies the accumulated cases per day in each of the countries.
 
-* Dataset_COVID_complete.csv
-This is the file resulting from the merger of the three files described above.
-
-## Results
-
-
-## Installation guide
-- First, we suggest having Anaconda installed on your computer, if you don't have it installed please go to: https://www.anaconda.com/products/individual
-- Second, follow the instructions according to the characteristics of your computer.
-- Third, verify that you have access to the Jupiter notebook.
+## Installation Requirements
 To install the project dependencies run pip install -r requirements.txt
-
+```
+pip install -r requirements.txt
+```
+Requirements includees:
+```
+pandas == 1.2.4
+streamlit==0.82.0
+plotly==4.14.3
+```
 ## Licensing
 MIT License
 
-Copyright (c) 2021 Eliseo Baquero
+Dashboard Designers:
+Dana Almanla
+Xiaojing(Soledad) Li
+Eliseo Baquero
