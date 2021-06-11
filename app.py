@@ -61,21 +61,37 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
 
                 fig = px.line(filter_data, x='Date', y=list_countries[0][0], 
                               width=1000, height=500, template= '%s' %(dt_choice_template))  # 'Daily_France_death')
-                fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7 Days Rolling') # 7 day average plot
+                return fig
 
+            elif (len(list_countries[0]) > 2):
+               # for i in filter_data.columns[0:-1]:
+               #     new_col = '7-day-rolling-' + i
+               #     filter_data[new_col] = filter_data.loc[:, i].rolling(7).mean() # 7 day average calculation
+               # print(filter_data.columns[len(list_countries[0]):])
+
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:len(list_countries[0])],
+                                  width=1000, height=500, template= '%s' %(dt_choice_template))
+
+                #for i in filter_data.columns[len(list_countries[0]):]:
+                #    fig.add_bar(x=filter_data['Date'], y=filter_data[i] , name = i)
+                return fig
+
+        if (dt_choice_cases == "7-day rolling"): # 7-day rolling
+            if (len(list_countries[0]) < 3):
+                filter_data['Average'] = filter_data.iloc[:, 0].rolling(7).mean() # 7 day average calculation
+
+                fig = px.line(filter_data, x=filter_data['Date'], y=filter_data['Average'],
+                              width=1000, height=500, template='%s' % (dt_choice_template))  # 'Daily_France_death')
                 return fig
 
             elif (len(list_countries[0]) > 2):
                 for i in filter_data.columns[0:-1]:
                     new_col = '7-day-rolling-' + i
-                    filter_data[new_col] = filter_data.loc[:, i].rolling(7).mean() # 7 day average calculation
-               # print(filter_data.columns[len(list_countries[0]):])
+                    filter_data[new_col] = filter_data.loc[:, i].rolling(7).mean()  # 7 day average calculation
 
-                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:len(list_countries[0])], 
-                              width=1000, height=500, template= '%s' %(dt_choice_template))
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[len(list_countries[0]) :],
+                              width=1000, height=500, template='%s' % (dt_choice_template))
 
-                for i in filter_data.columns[len(list_countries[0]):]:
-                    fig.add_bar(x=filter_data['Date'], y=filter_data[i] , name = i)
                 return fig
 
         if (dt_choice_cases == "Cumulative Cases"):
@@ -106,7 +122,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
 
                 fig = px.line(filter_data, x='Date', y=list_countries[0][0],
                               width=1000, height=500, template= '%s' %(dt_choice_template))
-                fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7 days Average') # 7_day_average plot
+                # fig.add_bar(x=filter_data['Date'], y=filter_data['Average'], name='7 days Average') # 7_day_average plot
 
                 return fig
 
@@ -121,12 +137,38 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                     filter_data[new_col] = filter_data.loc[:, i].rolling(7).mean()  # 7 day average calculation
                     # print(filter_data.columns[len(list_countries[0]):])
 
-                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:len(list_countries[0])], 
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[0:len(list_countries[0])],
                               width=1000, height=500, template= '%s' %(dt_choice_template))
 
-                for i in filter_data.columns[len(list_countries[0]):]:
-                    fig.add_bar(x=filter_data['Date'], y=filter_data[i], name=i)
                 return fig
+
+        if (dt_choice_cases == "7-day rolling"):
+            if (len(list_countries[0]) < 3):
+                df_pop= df_pop.reset_index()
+                population = df_pop[df_pop['Country (or dependency)']==list_countries[0][0]]['Population (2020)']
+                count_1000 = int(population)/100000
+                filter_data[list_countries[0][0]] = filter_data[list_countries[0][0]]/count_1000
+                filter_data['Average'] = filter_data.iloc[:, 0].rolling(7).mean() # 7_day_average Calculation
+
+                fig = px.line(x=filter_data['Date'], y=filter_data['Average'],width=1000, height=500, template= '%s' %(dt_choice_template))  # 7_day_average plot
+
+                return fig
+
+            elif (len(list_countries[0]) > 2):
+                df_pop = df_pop.reset_index()
+                for i in range(0, len(list_countries[0]) - 1):
+                    population = df_pop[df_pop['Country (or dependency)'] == list_countries[0][i]]['Population (2020)']
+                    count_1000 = int(population) / 100000
+                    filter_data[list_countries[0][i]] = filter_data[list_countries[0][i]] / count_1000
+                for i in filter_data.columns[0:-1]:
+                    new_col = '7-day-rolling-' + i
+                    filter_data[new_col] = filter_data.loc[:, i].rolling(7).mean()  # 7 day average calculation
+                    # print(filter_data.columns[len(list_countries[0]):])
+
+                fig = px.line(filter_data, x='Date', y=filter_data.columns[len(list_countries[0]) :], width=1000, height=500, template='%s' % (dt_choice_template))
+
+                return fig
+
 
         if (dt_choice_cases == "Cumulative Cases"):
             if (len(list_countries[0]) < 3):
@@ -176,7 +218,7 @@ if not dt_country:
     st.error("Please select at least one country.")
     st.stop()
 dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
-dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['Daily Cases','Cumulative Cases'])
+dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['Daily Cases','7-day rolling', 'Cumulative Cases'])
 dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
 
 
