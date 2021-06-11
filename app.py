@@ -260,17 +260,17 @@ st.sidebar.subheader("Choosing Dates")
 start_date = pd.Timestamp(st.sidebar.date_input('Start date', datetime.date(2020,1,22), min_value=datetime.date(2020,1,22), max_value=datetime.date(2021,5,19)))
 end_date = pd.Timestamp(st.sidebar.date_input('End date', datetime.date(2021,5,20), min_value=datetime.date(2020,1,23), max_value=datetime.date(2021,5,20)))
 
-dt_country = st.multiselect("Choose countries", list(df_cases.columns[0:-3]), default=['South Africa','Germany'])
 
+
+dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
+dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['7-day rolling','Daily Cases', 'Cumulative Cases'])
+dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
+dt_country = st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default=['South Africa','Germany'])
 country_choice.append(dt_country)
 #country_choice.append(st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default='US'))
 if not dt_country:
     st.error("Please select at least one country.")
     st.stop()
-dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
-dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['7-day rolling','Daily Cases', 'Cumulative Cases'])
-dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
-
 
 
 
