@@ -241,7 +241,7 @@ def map_view(df_loca,country_choice,type,df_cases,df_death,df_recovered,dt_choic
         fig = px.scatter_mapbox(data_to_work_full_pop, lat="Lat", lon='Long', size="Normalized data",
                                 # size of markers, "pop" is one of the columns of gapminder
                                 template='%s' % (dt_choice_template), zoom=1,hover_name = "Country/Region",color='color_pop'
-                                ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False,'color_pop':False})
+                                ,hover_data = {'Normalized data':False,'Total':True,'Lat' : False,'Long':False,'color_pop':False})
         fig.update_layout(mapbox_style="open-street-map",width=1170,height=550,showlegend=False)
        # fig.update_layout(margin={"r": 0, "l": 0})
 
