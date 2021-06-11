@@ -201,7 +201,7 @@ def vis(filter_data,list_countries,dt_choice_normal, dt_choice_cases, start_date
                               )
 
                 return fig
-def map_view(df_loca,type,df_cases,df_death,df_recovered,dt_choice_normal, dt_choice_cases, start_date, end_date,df_pop):
+def map_view(df_loca,country_choice,type,df_cases,df_death,df_recovered,dt_choice_normal, dt_choice_cases, start_date, end_date,df_pop):
 
     df_loca_sub = df_loca[['Country/Region','Lat','Long']]
     if (type =='Death'):
@@ -225,20 +225,23 @@ def map_view(df_loca,type,df_cases,df_death,df_recovered,dt_choice_normal, dt_ch
     data_to_work_full_pop = data_to_work_full_pop.drop_duplicates(subset=['Country/Region'], keep='first')
     data_to_work_full_pop.at[119, 'Lat'] =  48.864716
     data_to_work_full_pop.at[119, 'Long']= 2.349014
+    data_to_work_full_pop['color_pop'] = ''
+    print(country_choice)
+    data_to_work_full_pop['color_pop'] = data_to_work_full_pop["Country/Region"].apply(lambda x: 'Selected' if x in country_choice[0] else 'Not Selected')
 
     if (dt_choice_normal=='Non-normalized data'):
         fig =  px.scatter_mapbox(data_to_work_full_pop, lat="Lat", lon = 'Long',size="Total",  # size of markers, "pop" is one of the columns of gapminder
-                             template='%s' % (dt_choice_template),zoom=0,hover_name = "Country/Region"
+                             template='%s' % (dt_choice_template),zoom=1,hover_name = "Country/Region",  color='color_pop'
                                 ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False})
-        fig.update_layout(mapbox_style="open-street-map",margin=dict(l=200, r=20, t=20, b=20),width=1170)
+        fig.update_layout(mapbox_style="open-street-map",margin=dict(l=200, r=0, t=20, b=20),width=1270,showlegend=False)
         #fig.update_layout(margin={"r": 0, "l": 0})
         return fig
     elif(dt_choice_normal=='Normalized over 100k'):
         fig = px.scatter_mapbox(data_to_work_full_pop, lat="Lat", lon='Long', size="Normalized data",
                                 # size of markers, "pop" is one of the columns of gapminder
-                                template='%s' % (dt_choice_template), zoom=1,hover_name = "Country/Region"
+                                template='%s' % (dt_choice_template), zoom=1,hover_name = "Country/Region",color='color_pop'
                                 ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False})
-        fig.update_layout(mapbox_style="open-street-map",margin=dict(l=200, r=20, t=20, b=20),width=1170)
+        fig.update_layout(mapbox_style="open-street-map",margin=dict(l=200, r=20, t=20, b=20),width=1170,showlegend=False)
        # fig.update_layout(margin={"r": 0, "l": 0})
 
         return fig
@@ -265,7 +268,7 @@ end_date = pd.Timestamp(st.sidebar.date_input('End date', datetime.date(2021,5,2
 dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
 dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['7-day rolling','Daily Cases', 'Cumulative Cases'])
 dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
-dt_country = st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default=['South Africa','Germany'])
+dt_country = st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default=['US','Italy'])
 country_choice.append(dt_country)
 #country_choice.append(st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default='US'))
 if not dt_country:
@@ -274,7 +277,7 @@ if not dt_country:
 
 
 
-fig_map = map_view(df_location,dt_choice,df_cases,df_death,df_recovered,dt_choice_normal, dt_choice_cases, start_date, end_date,df_population)
+fig_map = map_view(df_location,country_choice,dt_choice,df_cases,df_death,df_recovered,dt_choice_normal, dt_choice_cases, start_date, end_date,df_population)
 st.plotly_chart(fig_map)
 if not dt_choice:
     st.sidebar.error("Please select at least one category.")
