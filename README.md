@@ -22,6 +22,7 @@ Province / state: identifies the name of the states in English that make up coun
 latitude: is one of the geographic coordinates that specifies the north – south position of a point on the Earth's surface.
 Longitude: it is one of the geographic coordinates that specifies the east – west position of a point on the Earth's surface.
 Date: identifies the accumulated cases per day in each of the countries.
+- To calulcate the normalization we acquire to get the population of the each country https://www.kaggle.com/tanuprabhu/population-by-country-2020 and we only used Country and Population. 
 
 ## Installation Requirements
 To install the project dependencies run pip install -r requirements.txt
