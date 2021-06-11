@@ -2,8 +2,9 @@ Table of Content
 ================
 * [Interactive-Covid-19-Dashboard](#Interactive-Covid-19-Dashboard)
   * [Description](#description)
-  * [Datasets](#Datasets)
-  * [Installation guide](#installation-guide)
+  * [Datasets](#datasets)
+  * [Installation Requirements](#installation-requirements)
+  * [Software Heritage](#software-heritage)
   * [Licensing](#licensing)
 
 # Interactive-Covid-19-Dashboard
@@ -18,13 +19,16 @@ The data sets are from the open data of [Jonhs Hopkins University](https://githu
 * Dataset_COVID_confiremed_complete.csv
 * Dataset_COVID_recovered_complete.csv
 
-each of the files has the following columns:
-Country / region: identifies the name of the country in English.
-Province / state: identifies the name of the states in English that make up countries such as China, Canada, Australia or overseas territories such as Denmark, the Netherlands or France.
-latitude: is one of the geographic coordinates that specifies the north – south position of a point on the Earth's surface.
-Longitude: it is one of the geographic coordinates that specifies the east – west position of a point on the Earth's surface.
-Date: identifies the accumulated cases per day in each of the countries.
-- To calulcate the normalization we acquire to get the population of the each country https://www.kaggle.com/tanuprabhu/population-by-country-2020 and we only used Country and Population. 
+Columns in the datasets:
+
+- `Country / region`: identifies the name of the country
+- `Province / state`: identifies the name of the states
+- `Latitude`: the geographic coordinates that specifies the north – south position of a point on the Earth's surface.
+- `Longitude`: the geographic coordinates that specifies the east – west position of a point on the Earth's surface.
+- `Date`: identifies the cumulative cases per day in each of the countries.
+
+To calulcate the normalization we acquire to get the population of the each country https://www.kaggle.com/tanuprabhu/population-by-country-2020 and we only used Country and Population. 
+
 
 ## Installation Requirements
 To install the project dependencies run pip install -r requirements.txt
@@ -41,11 +45,14 @@ To run the streamlit code
 ```
 streamlit run app.py
 ```
+## Software Heritage
+[![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:f16dc74c8cb24abe9674c52b352154a7eecaabaa/)](https://archive.softwareheritage.org/swh:1:dir:f16dc74c8cb24abe9674c52b352154a7eecaabaa;origin=https://github.com/soledadli/interactive-Covid-19-dashboard.git;visit=swh:1:snp:2cf6701fa76c93de35a2755c576ce5a4060d5b79;anchor=swh:1:rev:37f7e56df4be5edc7df6a6c12b21e7463b0c9fcc)
 
 ## Licensing
-MIT License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Dashboard Designers:
-Dana Almanla, 
-Xiaojing(Soledad) Li, 
-Eliseo Baquero
+
+## Authors:
+* **Dana Almanla** [@Danaal](https://github.com/Danaal) 
+* **Xiaojing(Soledad) Li** [@soledadli](https://github.com/soledadli) 
+* **Eliseo Baquero** [@Eli-2020](https://github.com/Eli-2020)
