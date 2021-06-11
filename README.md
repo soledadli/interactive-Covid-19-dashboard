@@ -31,7 +31,7 @@ To install the project dependencies run pip install -r requirements.txt
 ```
 pip install -r requirements.txt
 ```
-Requirements includees:
+Requirements includes:
 ```
 pandas == 1.2.4
 streamlit==0.82.0
@@ -46,6 +46,6 @@ streamlit run app.py
 MIT License
 
 Dashboard Designers:
-Dana Almanla
-Xiaojing(Soledad) Li
+Dana Almanla, 
+Xiaojing(Soledad) Li, 
 Eliseo Baquero
