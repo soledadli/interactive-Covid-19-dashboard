@@ -228,12 +228,13 @@ def map_view(df_loca,country_choice,type,df_cases,df_death,df_recovered,dt_choic
     data_to_work_full_pop['color_pop'] = ''
     print(country_choice)
     data_to_work_full_pop['color_pop'] = data_to_work_full_pop["Country/Region"].apply(lambda x: 'Selected' if x in country_choice[0] else 'Not Selected')
-
+    data_to_work_full_pop['Normalized data'] = data_to_work_full_pop['Normalized data'].round()
+    data_to_work_full_pop['Total'] = data_to_work_full_pop['Total'].round()
     if (dt_choice_normal=='Non-normalized data'):
         fig =  px.scatter_mapbox(data_to_work_full_pop, lat="Lat", lon = 'Long',size="Total",  # size of markers, "pop" is one of the columns of gapminder
                              template='%s' % (dt_choice_template),zoom=1,hover_name = "Country/Region",  color='color_pop'
 
-                                ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False})
+                                ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False,'color':False})
         fig.update_layout(mapbox_style="open-street-map",width=1170,height=550,showlegend=False)
         #fig.update_layout(margin={"r": 0, "l": 0})
         return fig
@@ -241,7 +242,7 @@ def map_view(df_loca,country_choice,type,df_cases,df_death,df_recovered,dt_choic
         fig = px.scatter_mapbox(data_to_work_full_pop, lat="Lat", lon='Long', size="Normalized data",
                                 # size of markers, "pop" is one of the columns of gapminder
                                 template='%s' % (dt_choice_template), zoom=1,hover_name = "Country/Region",color='color_pop'
-                                ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False})
+                                ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False,'color':False})
         fig.update_layout(mapbox_style="open-street-map",width=1170,height=550,showlegend=False)
        # fig.update_layout(margin={"r": 0, "l": 0})
 
