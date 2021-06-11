@@ -27,7 +27,7 @@ Columns in the datasets:
 - `Longitude`: the geographic coordinates that specifies the east – west position of a point on the Earth's surface.
 - `Date`: identifies the cumulative cases per day in each of the countries.
 
-To calulcate the normalization we acquire to get the population of the each country https://www.kaggle.com/tanuprabhu/population-by-country-2020 and we only used Country and Population. 
+To calulcate the normalization we acquire to get the population of the each country https://www.kaggle.com/tanuprabhu/population-by-country-2020 and we only used `Country and Population`. 
 
 
 ## Installation Requirements
