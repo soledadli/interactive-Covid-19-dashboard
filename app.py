@@ -234,7 +234,7 @@ def map_view(df_loca,country_choice,type,df_cases,df_death,df_recovered,dt_choic
                              template='%s' % (dt_choice_template),zoom=1,hover_name = "Country/Region",  color='color_pop'
 
                                 ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False})
-        fig.update_layout(mapbox_style="open-street-map",margin=dict(l=200, r=0, t=20, b=20),width=1270,showlegend=False)
+        fig.update_layout(mapbox_style="open-street-map",width=1270,showlegend=False)
         #fig.update_layout(margin={"r": 0, "l": 0})
         return fig
     elif(dt_choice_normal=='Normalized over 100k'):
@@ -242,7 +242,7 @@ def map_view(df_loca,country_choice,type,df_cases,df_death,df_recovered,dt_choic
                                 # size of markers, "pop" is one of the columns of gapminder
                                 template='%s' % (dt_choice_template), zoom=1,hover_name = "Country/Region",color='color_pop'
                                 ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False})
-        fig.update_layout(mapbox_style="open-street-map",margin=dict(l=200, r=20, t=20, b=20),width=1170,showlegend=False)
+        fig.update_layout(mapbox_style="open-street-map",width=1270,showlegend=False)
        # fig.update_layout(margin={"r": 0, "l": 0})
 
         return fig
@@ -294,5 +294,5 @@ if not dt_choice_normal:
 data_to_plot = df_selection(country_choice, dt_choice,df_cases,df_death,df_recovered)
 #print(data_to_plot.head())
 fig = vis(data_to_plot,country_choice,dt_choice_normal,dt_choice_cases, start_date, end_date, df_population)
-fig.update_layout(margin=dict(l=200, r=0, t=20, b=20),width=1300, height=500, )
+fig.update_layout(width=1300, height=500)
 st.plotly_chart(fig)
