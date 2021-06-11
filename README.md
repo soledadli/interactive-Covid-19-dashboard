@@ -34,7 +34,7 @@ To calulcate the normalization we acquire to get the population of the each coun
 ## Installation Requirements
 - Download Zip
 ```
-Code Button - Download ZIP
+Code - Download ZIP
 ```
 
 - Clone this repository with this command
