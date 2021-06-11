@@ -267,6 +267,8 @@ end_date = pd.Timestamp(st.sidebar.date_input('End date', datetime.date(2021,5,2
 
 
 dt_choice = st.sidebar.selectbox("Choose Category", ['Confirmed','Death','Recovered'])
+if dt_choice == "Recovered":
+    st.success("According to the data sources, recovered cases are not updated all the time.")
 dt_choice_cases = st.sidebar.selectbox("Choose Case View", ['7-day rolling','Daily Cases', 'Cumulative Cases'])
 dt_choice_normal =st.sidebar.selectbox("Choose View", ['Normalized over 100k','Non-normalized data'])
 dt_country = st.sidebar.multiselect("Choose countries", list(df_cases.columns[0:-3]), default=['US','Italy'])
