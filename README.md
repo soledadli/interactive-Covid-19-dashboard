@@ -6,6 +6,7 @@ Table of Content
   * [Installation Requirements](#installation-requirements)
   * [Software Heritage](#software-heritage)
   * [Licensing](#licensing)
+  * [Authors](#Authors)
 
 # Interactive-Covid-19-Dashboard
 https://share.streamlit.io/soledadli/interactive-covid-19-dashboard/main/app.py
@@ -31,11 +32,20 @@ To calulcate the normalization we acquire to get the population of the each coun
 
 
 ## Installation Requirements
-To install the project dependencies run pip install -r requirements.txt
+- Download Zip
+```
+Code - Download ZIP
+```
+
+- Clone this repository with this command
+```
+git clone https://github.com/soledadli/interactive-Covid-19-dashboard.git
+```
+- Install the project dependencies run pip install -r requirements.txt
 ```
 pip install -r requirements.txt
 ```
-Requirements includes:
+- Requirements includes:
 ```
 pandas == 1.2.4
 streamlit==0.82.0

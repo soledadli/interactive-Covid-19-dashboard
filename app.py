@@ -232,6 +232,7 @@ def map_view(df_loca,country_choice,type,df_cases,df_death,df_recovered,dt_choic
     if (dt_choice_normal=='Non-normalized data'):
         fig =  px.scatter_mapbox(data_to_work_full_pop, lat="Lat", lon = 'Long',size="Total",  # size of markers, "pop" is one of the columns of gapminder
                              template='%s' % (dt_choice_template),zoom=1,hover_name = "Country/Region",  color='color_pop'
+
                                 ,hover_data = {'Normalized data':True,'Total':True,'Lat' : False,'Long':False})
         fig.update_layout(mapbox_style="open-street-map",margin=dict(l=200, r=0, t=20, b=20),width=1270,showlegend=False)
         #fig.update_layout(margin={"r": 0, "l": 0})
