@@ -9,8 +9,7 @@ Table of Content
   * [Authors](#Authors)
 
 # Interactive-Covid-19-Dashboard
-[interactive dashboard]
-(https://share.streamlit.io/soledadli/interactive-covid-19-dashboard/main/app.py)
+https://share.streamlit.io/soledadli/interactive-covid-19-dashboard/main/app.py
 
 ## Description
 A collaborative work of building an interactive Covid-19 dashboard to provide insights about COVID globally by students from the Digital Sciences Track of Center for Research and Interdiscplinarity. 
