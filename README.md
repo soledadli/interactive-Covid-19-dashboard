@@ -35,6 +35,11 @@ pandas == 1.2.4
 streamlit==0.82.0
 plotly==4.14.3
 ```
+To run the streamlit code
+```
+streamlit run app.py
+```
+
 ## Licensing
 MIT License
 
