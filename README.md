@@ -65,4 +65,4 @@ streamlit run app.py
 ## Authors:
 * **Dana Almanla** [@Danaal](https://github.com/Danaal) 
 * **Xiaojing(Soledad) Li** [@soledadli](https://github.com/soledadli) 
-* **Eliseo Baquero** [@Eli-2020](https://github.com/Eli-2020)
+* **Eliseo Baquero** [@Eliseo-AI](https://github.com/Eliseo-AI)
